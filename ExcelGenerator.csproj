@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Properties -->
+    <PackageId>Faysil.ExcelGenerator</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Faysil Alshareef</Authors>
+    <Description>A lightweight .NET 9 library to generate Excel files from IEnumerable collections using ClosedXML. Features include customizable headers, automatic summation rows for decimal columns, and option to exclude Id columns.</Description>
+    <PackageTags>Excel;ClosedXML;Export;Generator;dotnet9;net9</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/FaysilAlshareef/ExcelGenerator</RepositoryUrl>
+    <PackageReleaseNotes>v1.0.0 - Initial release: Generate Excel files from IEnumerable collections with customizable headers, automatic decimal summation rows, and Id column exclusion option.</PackageReleaseNotes>
+    <Copyright>Copyright © 2025 Faysil Alshareef. All rights reserved.</Copyright>
+    <PackageProjectUrl>https://github.com/FaysilAlshareef/ExcelGenerator</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+  </ItemGroup>
+
+</Project>
