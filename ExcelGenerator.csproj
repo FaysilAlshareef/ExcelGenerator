@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     
     <!-- NuGet Package Properties -->
     <PackageId>Faysil.ExcelGenerator</PackageId>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Faysil Alshareef</Authors>
-    <Description>A lightweight .NET 9 library to generate Excel files from IEnumerable collections using ClosedXML. Features include customizable headers, automatic summation rows for decimal columns, and option to exclude Id columns.</Description>
-    <PackageTags>Excel;ClosedXML;Export;Generator;dotnet9;net9</PackageTags>
+    <Description>A lightweight .NET 10 library to generate Excel files from IEnumerable collections using ClosedXML. Features include customizable headers, automatic summation rows for decimal columns, and option to exclude Id columns. Now with C# 14 support.</Description>
+    <PackageTags>Excel;ClosedXML;Export;Generator;dotnet10;net10;csharp14</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/FaysilAlshareef/ExcelGenerator</RepositoryUrl>
-    <PackageReleaseNotes>v1.0.0 - Initial release: Generate Excel files from IEnumerable collections with customizable headers, automatic decimal summation rows, and Id column exclusion option.</PackageReleaseNotes>
+    <PackageReleaseNotes>v2.0.0 - Major update: Upgraded to .NET 10 and C# 14. Maintains all features from v1.0.0: Generate Excel files from IEnumerable collections with customizable headers, automatic decimal summation rows, and Id column exclusion option.</PackageReleaseNotes>
     <Copyright>Copyright © 2025 Faysil Alshareef. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/FaysilAlshareef/ExcelGenerator</PackageProjectUrl>
   </PropertyGroup>
