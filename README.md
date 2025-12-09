@@ -4,7 +4,7 @@ A lightweight .NET library to generate Excel files from `IEnumerable<T>` collect
 
 ## Supported Frameworks
 
-- **.NET 9.0**
+- **.NET 10.0** (with C# 14 support)
 
 ## Installation
 
