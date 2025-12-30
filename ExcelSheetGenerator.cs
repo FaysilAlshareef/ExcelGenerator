@@ -209,16 +209,25 @@ public static class ExcelSheetGenerator
             var property = properties[colIndex];
             var underlyingType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
 
-            if (underlyingType == typeof(decimal))
+            // Check if this is a numeric type
+            if (IsNumericType(underlyingType))
             {
                 hasSummation = true;
-                var sum = dataList
-                    .Select(item => item == null ? 0m : (decimal)(property.GetValue(item) ?? 0m))
-                    .Sum();
+                double sum = CalculateSum(dataList, property, underlyingType);
 
                 var cell = worksheet.Cell(summationRow, colIndex + 1);
-                cell.Value = (double)sum;
-                cell.Style.NumberFormat.Format = "#,##0.00";
+                cell.Value = sum;
+
+                // Apply appropriate number format based on type
+                if (IsFloatingPointType(underlyingType))
+                {
+                    cell.Style.NumberFormat.Format = "#,##0.00";
+                }
+                else
+                {
+                    cell.Style.NumberFormat.Format = "#,##0";
+                }
+
                 cell.Style.Font.Bold = true;
                 cell.Style.Fill.BackgroundColor = XLColor.LightGray;
                 cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
@@ -231,11 +240,11 @@ public static class ExcelSheetGenerator
             var firstCell = worksheet.Cell(summationRow, 1);
             if (string.IsNullOrEmpty(firstCell.GetString()) || !firstCell.Style.Font.Bold)
             {
-                // Check if the first column is not a decimal column
+                // Check if the first column is not a numeric column
                 var firstProperty = properties[0];
                 var firstUnderlyingType = Nullable.GetUnderlyingType(firstProperty.PropertyType) ?? firstProperty.PropertyType;
-                
-                if (firstUnderlyingType != typeof(decimal))
+
+                if (!IsNumericType(firstUnderlyingType))
                 {
                     firstCell.Value = "Total";
                     firstCell.Style.Font.Bold = true;
@@ -244,6 +253,68 @@ public static class ExcelSheetGenerator
                 }
             }
         }
+    }
+
+    private static bool IsNumericType(Type type)
+    {
+        return type == typeof(decimal) || type == typeof(double) || type == typeof(float) ||
+               type == typeof(int) || type == typeof(long) || type == typeof(short) || type == typeof(byte);
+    }
+
+    private static bool IsFloatingPointType(Type type)
+    {
+        return type == typeof(decimal) || type == typeof(double) || type == typeof(float);
+    }
+
+    private static double CalculateSum<T>(List<T> dataList, PropertyInfo property, Type underlyingType)
+    {
+        if (underlyingType == typeof(decimal))
+        {
+            var sum = dataList
+                .Select(item => item == null ? 0m : (decimal)(property.GetValue(item) ?? 0m))
+                .Sum();
+            return (double)sum.RefineValue();
+        }
+        else if (underlyingType == typeof(double))
+        {
+            var sum = dataList
+                .Select(item => item == null ? 0.0 : (double)(property.GetValue(item) ?? 0.0))
+                .Sum();
+            return (double)((decimal)sum).RefineValue();
+        }
+        else if (underlyingType == typeof(float))
+        {
+            var sum = dataList
+                .Select(item => item == null ? 0f : (float)(property.GetValue(item) ?? 0f))
+                .Sum();
+            return (double)((decimal)sum).RefineValue();
+        }
+        else if (underlyingType == typeof(int))
+        {
+            return dataList
+                .Select(item => item == null ? 0 : (int)(property.GetValue(item) ?? 0))
+                .Sum();
+        }
+        else if (underlyingType == typeof(long))
+        {
+            return dataList
+                .Select(item => item == null ? 0L : (long)(property.GetValue(item) ?? 0L))
+                .Sum();
+        }
+        else if (underlyingType == typeof(short))
+        {
+            return dataList
+                .Select(item => item == null ? 0 : (int)(short)(property.GetValue(item) ?? (short)0))
+                .Sum();
+        }
+        else if (underlyingType == typeof(byte))
+        {
+            return dataList
+                .Select(item => item == null ? 0 : (int)(byte)(property.GetValue(item) ?? (byte)0))
+                .Sum();
+        }
+
+        return 0;
     }
 
     private static string FormatPropertyName(string propertyName)

@@ -7,8 +7,8 @@ A lightweight .NET library to generate Excel files from `IEnumerable<T>` collect
 ### V2 (Current)
 - **Framework**: .NET 10.0
 - **C# Version**: 14
-- **Package Version**: 2.0.0
-- **Features**: All V1 features with modern .NET 10 runtime performance improvements
+- **Package Version**: 2.0.1 (latest), 2.0.0
+- **Features**: All V1 features with modern .NET 10 runtime performance improvements, plus automatic totals for all numeric types
 - **Breaking Changes**: None - fully backward compatible API
 
 ### V1
@@ -26,13 +26,13 @@ A lightweight .NET library to generate Excel files from `IEnumerable<T>` collect
 ### For .NET 10 Projects (V2 - Recommended)
 
 ```bash
-dotnet add package Faysil.ExcelGenerator --version 2.0.0
+dotnet add package Faysil.ExcelGenerator --version 2.0.1
 ```
 
 Or via NuGet Package Manager:
 
 ```powershell
-Install-Package Faysil.ExcelGenerator -Version 2.0.0
+Install-Package Faysil.ExcelGenerator -Version 2.0.1
 ```
 
 ### For .NET 9 Projects (V1 - Legacy)
@@ -46,7 +46,7 @@ dotnet add package Faysil.ExcelGenerator --version 1.0.0
 - ✅ Generate Excel files from any `IEnumerable<T>` or `List<T>`
 - ✅ Customizable header colors
 - ✅ Option to exclude columns ending with "Id"
-- ✅ Automatic summation row for decimal columns
+- ✅ Automatic summation row for all numeric columns (decimal, double, float, int, long, short, byte)
 - ✅ Auto-formatted column headers (PascalCase to spaced text)
 - ✅ Auto-fit column widths
 - ✅ Multiple output formats: File, Byte Array, Stream, or XLWorkbook
@@ -129,13 +129,30 @@ workbook.SaveAs("output.xlsx");
 - **Decimals**: Displayed with 2 decimal places
 - **Dates**: Formatted as `yyyy-MM-dd HH:mm:ss`
 - **Booleans**: Displayed as "Yes" or "No"
-- **Summation Row**: Automatically added for decimal columns at the bottom
+- **Summation Row**: Automatically added for all numeric columns (decimal, double, float, int, long, short, byte) at the bottom
 
 ## Dependencies
 
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML) v0.105.0 (latest stable version)
   - Compatible with .NET Standard 2.0+
   - Works seamlessly with .NET 10
+
+## What's New in V2.0.1?
+
+### New Features
+- **All Numeric Types Totals**: Automatic summation row now supports ALL numeric types, not just decimal
+  - Supported types: `decimal`, `double`, `float`, `int`, `long`, `short`, `byte`
+  - Floating-point numbers display with 2 decimal places
+  - Integer types display without decimals
+- **RefineValue Extension**: New public extension method for precise decimal calculations
+  - Truncates to 3 decimal places instead of rounding
+  - Available for use in your own code via `NumericExtensions.RefineValue()`
+  - Applied automatically to decimal and double totals
+
+### Improvements
+- Enhanced number formatting consistency across all numeric types
+- More accurate summation using truncation for floating-point values
+- Better handling of mixed numeric column types
 
 ## What's New in V2?
 
