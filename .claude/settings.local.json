@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(dir \"C:\\Users\\libya\\source\\repos\\FaysilAlshareef\\ExcelGenerator\" /B)",
-      "Bash(dotnet build:*)"
+      "Bash(dotnet build:*)",
+      "Bash(git checkout:*)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet add reference:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet test:*)"
     ]
   }
 }
