@@ -30,4 +30,14 @@
     <PackageReference Include="ClosedXML" Version="0.105.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="ExcelGenerator.Tests\**" />
+    <EmbeddedResource Remove="ExcelGenerator.Tests\**" />
+    <None Remove="ExcelGenerator.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ExcelGenerator.Tests" />
+  </ItemGroup>
+
 </Project>

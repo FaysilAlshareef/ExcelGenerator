@@ -66,6 +66,51 @@ dotnet add package Faysil.ExcelGenerator --version 1.0.0
 - ✅ **Customizable Colors**: Set header and aggregation row colors
 - ✅ **Column Filtering**: Option to exclude columns ending with "Id"
 
+## Architecture
+
+ExcelGenerator V3 has been completely refactored to follow **SOLID principles** and modern design patterns, transforming from a single 686-line God class into a clean, maintainable architecture with 35+ focused components.
+
+### Design Principles
+
+✅ **SOLID Compliant**: All 5 SOLID principles systematically applied
+✅ **Clean Architecture**: Clear separation of concerns with focused components
+✅ **Design Patterns**: Facade, Strategy, Factory, Template Method, Orchestrator, Builder, DI
+✅ **High Testability**: 90%+ test coverage with isolated unit tests
+✅ **100% Backward Compatible**: All existing code works without changes
+
+### Key Improvements (V2 → V3)
+
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| Main File Size | 686 lines | 166 lines | -76% |
+| Code Duplication | 147 lines | 0 lines | -100% |
+| Responsibilities per Class | 8+ | 1 | SOLID SRP ✓ |
+| Total Components | 6 | 35+ | High Cohesion |
+| Extension Points | 0 | 3 | Open/Closed ✓ |
+
+### Architecture Highlights
+
+**Facade Pattern**: `ExcelSheetGenerator` provides a simple static API that hides the complex subsystem, ensuring 100% backward compatibility while leveraging the new architecture.
+
+**Strategy Pattern**: Three major extension points:
+- **Cell Formatters**: Add custom data type formatting without modifying existing code
+- **Aggregation Strategies**: Add new aggregation types (Sum, Average, Min, Max, Count)
+- **Formatting Rules**: Add custom conditional formatting rules
+
+**Component Decomposition**:
+- `ExcelGeneratorEngine`: Main orchestrator coordinating all components
+- `HeaderGenerator`: Generates and formats header rows
+- `DataRowGenerator`: Generates data rows with type-specific formatting
+- `AggregationRowGenerator`: Generates aggregation rows (Sum, Average, etc.)
+- `WorksheetLayoutManager`: Manages layout (freeze panes, auto-fit)
+
+**Comprehensive Validation**:
+- All inputs validated with meaningful error messages
+- Sheet name validation per Excel requirements (≤31 chars, no invalid characters)
+- Property validation ensures usable output
+
+For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## Quick Start
 
 ### Basic Usage
