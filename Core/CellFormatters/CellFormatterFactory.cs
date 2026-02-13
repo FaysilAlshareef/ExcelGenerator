@@ -56,9 +56,18 @@ internal class CellFormatterFactory
     /// </summary>
     private ICellValueFormatter GetFormatter(Type type)
     {
-        return _formatters
-            .Where(f => f.CanFormat(type))
-            .OrderByDescending(f => f.Priority)
-            .FirstOrDefault() ?? _fallbackFormatter;
+        ICellValueFormatter? bestFormatter = null;
+        int highestPriority = int.MinValue;
+
+        foreach (var formatter in _formatters)
+        {
+            if (formatter.CanFormat(type) && formatter.Priority > highestPriority)
+            {
+                bestFormatter = formatter;
+                highestPriority = formatter.Priority;
+            }
+        }
+
+        return bestFormatter ?? _fallbackFormatter;
     }
 }

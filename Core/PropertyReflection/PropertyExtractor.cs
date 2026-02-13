@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
 
 namespace ExcelGenerator.Core.PropertyReflection;
 
@@ -8,19 +9,25 @@ namespace ExcelGenerator.Core.PropertyReflection;
 /// </summary>
 internal class PropertyExtractor : IPropertyExtractor
 {
+    private static readonly ConcurrentDictionary<(Type, bool), PropertyInfo[]> _propertyCache = new();
+
     public PropertyInfo[] Extract<T>(bool excludeIds = false)
     {
-        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(p => p.CanRead);
-
-        if (excludeIds)
+        var key = (typeof(T), excludeIds);
+        return _propertyCache.GetOrAdd(key, _ =>
         {
-            properties = properties.Where(p =>
-                !p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) &&
-                !p.Name.EndsWith("ID", StringComparison.Ordinal));
-        }
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead);
 
-        return properties.ToArray();
+            if (excludeIds)
+            {
+                properties = properties.Where(p =>
+                    !p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) &&
+                    !p.Name.EndsWith("ID", StringComparison.Ordinal));
+            }
+
+            return properties.ToArray();
+        });
     }
 
     public string FormatPropertyName(string propertyName)

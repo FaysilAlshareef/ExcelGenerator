@@ -2,6 +2,7 @@ using ClosedXML.Excel;
 using ExcelGenerator.Core.PropertyReflection;
 using ExcelGenerator.Core.Generators;
 using ExcelGenerator.Core.ConditionalFormatting;
+using System.Text;
 
 namespace ExcelGenerator.Core;
 
@@ -102,11 +103,18 @@ internal class ExcelGeneratorEngine
     private void ApplyConditionalFormatting(IXLWorksheet worksheet, System.Reflection.PropertyInfo[] properties,
         int dataCount, ConditionalFormattingConfiguration config)
     {
+        // Build a dictionary for O(1) property name lookups
+        var propertyIndexMap = new Dictionary<string, int>(properties.Length);
+        for (int i = 0; i < properties.Length; i++)
+        {
+            propertyIndexMap[properties[i].Name] = i;
+        }
+
         foreach (var rule in config.Rules)
         {
-            // Find the column index for this property
-            var colIndex = Array.FindIndex(properties, p => p.Name == rule.ColumnName);
-            if (colIndex < 0) continue;
+            // Find the column index for this property using dictionary lookup
+            if (!propertyIndexMap.TryGetValue(rule.ColumnName, out var colIndex))
+                continue;
 
             var columnLetter = GetColumnLetter(colIndex + 1);
             var dataRange = worksheet.Range($"{columnLetter}2:{columnLetter}{dataCount + 1}");
@@ -119,14 +127,14 @@ internal class ExcelGeneratorEngine
 
     private static string GetColumnLetter(int columnNumber)
     {
-        string columnName = "";
+        var sb = new StringBuilder();
         while (columnNumber > 0)
         {
             int modulo = (columnNumber - 1) % 26;
-            columnName = Convert.ToChar('A' + modulo) + columnName;
+            sb.Insert(0, (char)('A' + modulo));
             columnNumber = (columnNumber - modulo) / 26;
         }
-        return columnName;
+        return sb.ToString();
     }
 
     /// <summary>
