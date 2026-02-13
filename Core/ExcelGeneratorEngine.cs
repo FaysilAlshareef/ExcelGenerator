@@ -127,7 +127,7 @@ internal class ExcelGeneratorEngine
 
     private static string GetColumnLetter(int columnNumber)
     {
-        var chars = new char[7]; // Max Excel column is XFD (16384), which is 3 chars, but 7 is safe
+        var chars = new char[7]; // Excel max is XFD (col 16384) = 3 chars; 7 provides safe buffer
         int index = chars.Length;
         
         while (columnNumber > 0)
