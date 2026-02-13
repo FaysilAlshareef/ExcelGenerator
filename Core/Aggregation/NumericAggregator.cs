@@ -36,46 +36,46 @@ internal class NumericAggregator
         if (underlyingType == typeof(decimal))
         {
             var sum = dataList
-                .Select(item => item == null ? 0m : (decimal)(accessor(item!) ?? 0m))
+                .Select(item => item == null ? 0m : (decimal)(accessor(item) ?? 0m))
                 .Sum();
             return (double)sum.RefineValue();
         }
         else if (underlyingType == typeof(double))
         {
             var sum = dataList
-                .Select(item => item == null ? 0.0 : (double)(accessor(item!) ?? 0.0))
+                .Select(item => item == null ? 0.0 : (double)(accessor(item) ?? 0.0))
                 .Sum();
             return (double)((decimal)sum).RefineValue();
         }
         else if (underlyingType == typeof(float))
         {
             var sum = dataList
-                .Select(item => item == null ? 0f : (float)(accessor(item!) ?? 0f))
+                .Select(item => item == null ? 0f : (float)(accessor(item) ?? 0f))
                 .Sum();
             return (double)((decimal)sum).RefineValue();
         }
         else if (underlyingType == typeof(int))
         {
             return dataList
-                .Select(item => item == null ? 0 : (int)(accessor(item!) ?? 0))
+                .Select(item => item == null ? 0 : (int)(accessor(item) ?? 0))
                 .Sum();
         }
         else if (underlyingType == typeof(long))
         {
             return dataList
-                .Select(item => item == null ? 0L : (long)(accessor(item!) ?? 0L))
+                .Select(item => item == null ? 0L : (long)(accessor(item) ?? 0L))
                 .Sum();
         }
         else if (underlyingType == typeof(short))
         {
             return dataList
-                .Select(item => item == null ? 0 : (int)(short)(accessor(item!) ?? (short)0))
+                .Select(item => item == null ? 0 : (int)(short)(accessor(item) ?? (short)0))
                 .Sum();
         }
         else if (underlyingType == typeof(byte))
         {
             return dataList
-                .Select(item => item == null ? 0 : (int)(byte)(accessor(item!) ?? (byte)0))
+                .Select(item => item == null ? 0 : (int)(byte)(accessor(item) ?? (byte)0))
                 .Sum();
         }
 
@@ -92,46 +92,46 @@ internal class NumericAggregator
         if (underlyingType == typeof(decimal))
         {
             var min = dataList
-                .Select(item => item == null ? decimal.MaxValue : (decimal)(accessor(item!) ?? decimal.MaxValue))
+                .Select(item => item == null ? decimal.MaxValue : (decimal)(accessor(item) ?? decimal.MaxValue))
                 .Min();
             return (double)min.RefineValue();
         }
         else if (underlyingType == typeof(double))
         {
             var min = dataList
-                .Select(item => item == null ? double.MaxValue : (double)(accessor(item!) ?? double.MaxValue))
+                .Select(item => item == null ? double.MaxValue : (double)(accessor(item) ?? double.MaxValue))
                 .Min();
             return (double)((decimal)min).RefineValue();
         }
         else if (underlyingType == typeof(float))
         {
             var min = dataList
-                .Select(item => item == null ? float.MaxValue : (float)(accessor(item!) ?? float.MaxValue))
+                .Select(item => item == null ? float.MaxValue : (float)(accessor(item) ?? float.MaxValue))
                 .Min();
             return (double)((decimal)min).RefineValue();
         }
         else if (underlyingType == typeof(int))
         {
             return dataList
-                .Select(item => item == null ? int.MaxValue : (int)(accessor(item!) ?? int.MaxValue))
+                .Select(item => item == null ? int.MaxValue : (int)(accessor(item) ?? int.MaxValue))
                 .Min();
         }
         else if (underlyingType == typeof(long))
         {
             return dataList
-                .Select(item => item == null ? long.MaxValue : (long)(accessor(item!) ?? long.MaxValue))
+                .Select(item => item == null ? long.MaxValue : (long)(accessor(item) ?? long.MaxValue))
                 .Min();
         }
         else if (underlyingType == typeof(short))
         {
             return dataList
-                .Select(item => item == null ? short.MaxValue : (int)(short)(accessor(item!) ?? short.MaxValue))
+                .Select(item => item == null ? short.MaxValue : (int)(short)(accessor(item) ?? short.MaxValue))
                 .Min();
         }
         else if (underlyingType == typeof(byte))
         {
             return dataList
-                .Select(item => item == null ? byte.MaxValue : (int)(byte)(accessor(item!) ?? byte.MaxValue))
+                .Select(item => item == null ? byte.MaxValue : (int)(byte)(accessor(item) ?? byte.MaxValue))
                 .Min();
         }
 
@@ -148,46 +148,46 @@ internal class NumericAggregator
         if (underlyingType == typeof(decimal))
         {
             var max = dataList
-                .Select(item => item == null ? decimal.MinValue : (decimal)(accessor(item!) ?? decimal.MinValue))
+                .Select(item => item == null ? decimal.MinValue : (decimal)(accessor(item) ?? decimal.MinValue))
                 .Max();
             return (double)max.RefineValue();
         }
         else if (underlyingType == typeof(double))
         {
             var max = dataList
-                .Select(item => item == null ? double.MinValue : (double)(accessor(item!) ?? double.MinValue))
+                .Select(item => item == null ? double.MinValue : (double)(accessor(item) ?? double.MinValue))
                 .Max();
             return (double)((decimal)max).RefineValue();
         }
         else if (underlyingType == typeof(float))
         {
             var max = dataList
-                .Select(item => item == null ? float.MinValue : (float)(accessor(item!) ?? float.MinValue))
+                .Select(item => item == null ? float.MinValue : (float)(accessor(item) ?? float.MinValue))
                 .Max();
             return (double)((decimal)max).RefineValue();
         }
         else if (underlyingType == typeof(int))
         {
             return dataList
-                .Select(item => item == null ? int.MinValue : (int)(accessor(item!) ?? int.MinValue))
+                .Select(item => item == null ? int.MinValue : (int)(accessor(item) ?? int.MinValue))
                 .Max();
         }
         else if (underlyingType == typeof(long))
         {
             return dataList
-                .Select(item => item == null ? long.MinValue : (long)(accessor(item!) ?? long.MinValue))
+                .Select(item => item == null ? long.MinValue : (long)(accessor(item) ?? long.MinValue))
                 .Max();
         }
         else if (underlyingType == typeof(short))
         {
             return dataList
-                .Select(item => item == null ? short.MinValue : (int)(short)(accessor(item!) ?? short.MinValue))
+                .Select(item => item == null ? short.MinValue : (int)(short)(accessor(item) ?? short.MinValue))
                 .Max();
         }
         else if (underlyingType == typeof(byte))
         {
             return dataList
-                .Select(item => item == null ? byte.MinValue : (int)(byte)(accessor(item!) ?? byte.MinValue))
+                .Select(item => item == null ? byte.MinValue : (int)(byte)(accessor(item) ?? byte.MinValue))
                 .Max();
         }
 

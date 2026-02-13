@@ -127,14 +127,17 @@ internal class ExcelGeneratorEngine
 
     private static string GetColumnLetter(int columnNumber)
     {
-        var sb = new StringBuilder();
+        var chars = new char[7]; // Max Excel column is XFD (16384), which is 3 chars, but 7 is safe
+        int index = chars.Length;
+        
         while (columnNumber > 0)
         {
             int modulo = (columnNumber - 1) % 26;
-            sb.Insert(0, (char)('A' + modulo));
+            chars[--index] = (char)('A' + modulo);
             columnNumber = (columnNumber - modulo) / 26;
         }
-        return sb.ToString();
+        
+        return new string(chars, index, chars.Length - index);
     }
 
     /// <summary>
