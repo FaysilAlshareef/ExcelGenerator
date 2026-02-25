@@ -53,12 +53,12 @@ internal class CellFormatterFactory
 
     /// <summary>
     /// Gets the appropriate formatter for the specified type
+    /// OPTIMIZED: Formatters are already in priority order, no need to sort
     /// </summary>
     private ICellValueFormatter GetFormatter(Type type)
     {
-        return _formatters
-            .Where(f => f.CanFormat(type))
-            .OrderByDescending(f => f.Priority)
-            .FirstOrDefault() ?? _fallbackFormatter;
+        // Formatters are already registered in priority order in constructor
+        // Just find the first match - no need for OrderByDescending
+        return _formatters.FirstOrDefault(f => f.CanFormat(type)) ?? _fallbackFormatter;
     }
 }
